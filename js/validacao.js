@@ -60,7 +60,57 @@ const mensagensDeErro = {
 const validadores = {
     dataNascimento:input => validaDataNascimento(input),
     cpf:input => validaCPF(input),
-    cep:input => recuperarCEP(input)
+    cep:input => recuperarCEP(input),
+    numero:input => validaNumero(input),
+    instagran:input => validaInstagram(input),
+    nome:input => validaNome(input),
+    qtdEstoque:input => validaQtdEstoque(input)
+}
+
+function validaQtdEstoque(input) {
+    const qtdEstoque = input.value
+    let mensagem = ''
+    if(qtdEstoque < 0) mensagem = ('A quantidade em estoque não pode ser negativa.')
+    if(qtdEstoque == 0) mensagem = ('A quantidade em estoque não pode ser 0.')
+    if(!qtdEstoque) mensagem = ('A quantidade em estoque não pode estar vazia.')
+    input.setCustomValidity(mensagem)
+}
+
+function validaNome(input) {
+    const nome = input.value
+    const regex = /^[a-zA-Z]{2,}([a-zA-Z]|\s[a-zA-Z])*$/;
+    let mensagem = ''
+    if(!nome) mensagem = ('O campo de nome não pode estar vazio.')
+    if(!regex.test(nome)) mensagem = ('O nome digitado não é válido.')
+}
+
+function validaNumero(input) {
+    const numero = input.value
+    const regex = /^(\([1-9]{2}\)\s?[9]{1}[0-9]{4}-?[0-9]{4}|[1-9]{2}[9]{1}[0-9]{8})$/;
+    let mensagem = ''
+    if(!numero) {
+        mensagem = ('O campo de número não pode estar vazio.')
+        
+    }
+    input.setCustomValidity('')
+    if(!regex.test(numero)) {
+        mensagem =('O número digitado não é válido.')
+        
+    }   
+}
+
+function validaInstagram(input) {
+    const instagram = input.value
+    const regex = /^@([A-Za-z0-9\._-]{1,})$/
+    if(!instagram) {
+        mensagem = ('O campo de instagram não pode estar vazio.')
+        
+    }
+    input.setCustomValidity('')
+    if(!regex.test(instagram)) {
+        mensagem = ('O instagram digitado não é válido.')
+        
+    }   
 }
 
 function mostraMensagemDeErro(tipoDeInput, input) {
